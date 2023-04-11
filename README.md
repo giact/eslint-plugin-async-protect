@@ -26,11 +26,18 @@ Within your `.eslintrc` file you need to include the plugin, and specify the lev
    ],
    "rules": {
        "async-protect/async-suffix": "error",
-       "async-protect/async-await": "warn",
+       "async-protect/async-await": ["warn", { "checkMissingAwait": true, "checkExtraAwait": true }],
    }
 }
 ```
 The general recommendation is to use `warn` for the `async-await` rule. This is because for 3rd party code you do not have control over function names, and the plugin may complain at extraneous `await` keywords.
+
+The `async-await` rule has two options:
+
+* `checkMissingAwait`: Checks if functions with an `Async` suffix are called with an `await` or `return` (default: `true`).
+* `checkExtraAwait`: Checks if functions without an `Async` suffix are called without an `await` or `return` (default: `true`).
+
+You can set these options to `true` or `false` according to your requirements.
 
 ## Rules
 
@@ -64,7 +71,7 @@ const fooAsync = function() {}
 ```
 
 ### async-await
-This rule enforces that all functions with an `Async` suffix on their name should be called with an `await` or `return`. Functions without the suffix should not be called with an `await` or `return`.
+This rule enforces that all functions with an `Async` suffix on their name should be called with an `await` or `return` if `checkMissingAwait` is enabled, and that functions without the suffix should not be called with an `await` or `return` if `checkExtraAwait` is enabled.
 
 There are times when you may wish for an `async` function to run in the background, or where you need to call 3rd party code that doesn't follow the `async-suffix` naming convention. In that case use `// eslint-disable-line async-protect/async-await` to disable the rule for that line.
 
@@ -88,3 +95,5 @@ const result = foo().bar().bazAsync();
 
 const result = await foo();
 ```
+
+Remember that the valid and invalid examples may vary based on the `checkMissingAwait` and `checkExtraAwait` options provided in the configuration.

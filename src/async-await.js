@@ -1,6 +1,7 @@
 /**
  * @fileoverview Ensure functions with 'Async' naming convention are awaited
  * @author Ian Wright
+ * @author Giacomo Tazzari
  */
 "use strict";
 
@@ -15,9 +16,29 @@ module.exports = {
             recommended: true,
             url: "",
         },
+        schema: [
+            {
+                type: "object",
+                properties: {
+                    checkMissingAwait: {
+                        type: "boolean",
+                        default: true,
+                    },
+                    checkExtraAwait: {
+                        type: "boolean",
+                        default: true,
+                    },
+                },
+                additionalProperties: false,
+            },
+        ],
     },
 
     create: function (context) {
+        const options = context.options[0] || {};
+        const checkMissingAwait = options.checkMissingAwait !== false;
+        const checkExtraAwait = options.checkExtraAwait !== false;
+
         const MISSING_AWAIT = "The call to '{{name}}' is missing an await";
         const EXTRA_AWAIT = "The call to '{{name}}' has an un-needed await";
 
@@ -68,7 +89,7 @@ module.exports = {
                 return;
             }
 
-            if (nameEndsWithAsync && !calledWithAwait && !calledWithReturn) {
+            if (checkMissingAwait && nameEndsWithAsync && !calledWithAwait && !calledWithReturn) {
                 context.report({
                     node: node,
                     message: MISSING_AWAIT,
@@ -76,7 +97,7 @@ module.exports = {
                 });
             }
 
-            if (!nameEndsWithAsync && calledWithAwait) {
+            if (checkExtraAwait && !nameEndsWithAsync && calledWithAwait) {
                 context.report({
                     node: node,
                     message: EXTRA_AWAIT,

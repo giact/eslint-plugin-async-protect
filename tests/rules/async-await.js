@@ -1,6 +1,7 @@
 /**
  * @fileoverview Ensure functions with &#39;Async&#39; naming convention are awaited
  * @author Ian Wright
+ * @author Giacomo Tazzari
  */
 "use strict";
 
@@ -110,6 +111,22 @@ ruleTester.run("async-await", rule, {
                 await ngOnInit();
             })();
             `,
+        },
+        // Test case with only checkMissingAwait enabled
+        {
+            code: `
+                (iife = async function() {
+                    await foo();
+                })();`,
+            options: [{ checkMissingAwait: true, checkExtraAwait: false }],
+        },
+        // Test case with only checkExtraAwait enabled
+        {
+            code: `
+                (iife = async function() {
+                    fooAsync();
+                })();`,
+            options: [{ checkMissingAwait: false, checkExtraAwait: true }],
         },
     ],
 
@@ -270,6 +287,24 @@ ruleTester.run("async-await", rule, {
                 { message: getError("doSomething", false), type: "CallExpression" },
                 { message: getError("fooAsync", true), type: "CallExpression" },
             ],
+        },
+        // Test case with only checkMissingAwait enabled
+        {
+            code: `
+                (iife = async function() {
+                    fooAsync();
+                })();`,
+            options: [{ checkMissingAwait: true, checkExtraAwait: false }],
+            errors: [{ message: getError("fooAsync", true), type: "CallExpression" }],
+        },
+        // Test case with only checkExtraAwait enabled
+        {
+            code: `
+                (iife = async function() {
+                    await foo();
+                })();`,
+            options: [{ checkMissingAwait: false, checkExtraAwait: true }],
+            errors: [{ message: getError("foo", false), type: "CallExpression" }],
         },
     ],
 });
