@@ -1,5 +1,5 @@
 {
-  "name": "eslint-plugin-async-protect",
+  "name": "@giact/eslint-plugin-async-protect",
   "version": "3.0.0",
   "description": "Protects against missing await keywords on async functions",
   "keywords": [
@@ -9,11 +9,14 @@
     "async",
     "await"
   ],
-  "homepage": "https://github.com/IPWright83/eslint-plugin-async-protect#readme",
+  "homepage": "https://github.com/giact/eslint-plugin-async-protect#readme",
   "bugs": {
-    "url": "https://github.com/IPWright83/eslint-plugin-async-protect/issues"
+    "url": "https://github.com/giact/eslint-plugin-async-protect/issues"
   },
   "author": "Ian Wright",
+  "contributors": [
+    "Giacomo Tazzari <giacomo.tazzari@gmail.com>"
+  ],
   "scripts": {
     "test": "mocha tests --recursive"
   },
