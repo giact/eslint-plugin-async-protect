@@ -19,7 +19,7 @@ npm install --save-dev @giact/eslint-plugin-async-protect
 
 ## Configuration
 Within your `.eslintrc` file you need to include the plugin, and specify the level the rules should apply:
-```
+```json
 {
    "plugins": [
       "async-protect"
@@ -38,7 +38,7 @@ The general recommendation is to use `warn` for the `async-await` rule. This is 
 This rule enforces that `async` functions have an `Async` suffix to their name. Functions not defined as `async` should not have the suffix. Here are some examples:
 
 ##### valid
-```
+```js
 const fooAsync = async function() {}
 async function fooAsync() {}
 class Bar {
@@ -51,7 +51,7 @@ const foo = function() {}
 ```
 
 ##### invalid
-```
+```js
 const foo = async function() {}
 async function foo() {}
 class Bar {
@@ -69,7 +69,7 @@ This rule enforces that all functions with an `Async` suffix on their name shoul
 There are times when you may wish for an `async` function to run in the background, or where you need to call 3rd party code that doesn't follow the `async-suffix` naming convention. In that case use `// eslint-disable-line async-protect/async-await` to disable the rule for that line.
 
 ##### valid
-```
+```js
 await fooAsync();
 return fooAsync();
 const result = await fooAsync();
@@ -80,7 +80,7 @@ const result = foo();
 ```
 
 ##### invalid
-```
+```js
 fooAsync();
 const result = fooAsync();
 const result = fooAsync().result;
