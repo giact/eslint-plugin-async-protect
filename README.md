@@ -1,4 +1,4 @@
-# `eslint-plugin-async-protect`
+# `@giact/eslint-plugin-async-protect`
 Async functions are great, especially when combined with the `await` keyword. That being said it isn't always obvious whether a function is asynchronous or not. It is also relatively easy to forget to stick an `await` on a function. These can cause dome difficult to locate bugs and can waste significant time.
 
 This plugin tries to prevent some of these problems. The other major benefit is because this encourages a naming convention, these rules can apply across different files.
@@ -9,12 +9,12 @@ This ESLint plugin enforces the following:
  - calls to functions with an `Async` suffix on the name should be called with `await`
 
 ## Installation
-Package: https://www.npmjs.com/package/eslint-plugin-async-protect
+Package: https://www.npmjs.com/package/@giact/eslint-plugin-async-protect
 
 Assuming that you already have ESLint installed, simply run:
 
 ```
-npm install --save-dev eslint-plugin-async-protect
+npm install --save-dev @giact/eslint-plugin-async-protect
 ```
 
 ## Configuration
